@@ -129,13 +129,22 @@ A reality-first food balancing app for students and young adults with a warm, fr
 
 ---
 
-## What We're Building First (MVP)
-1. ✅ Authentication & onboarding
-2. ✅ Food logging with all categories & portion sizes
-3. ✅ Daily snapshot & status
-4. ✅ Balancing view for low protein
-5. ✅ End-of-day status
-6. ✅ Basic streaks & consistency
+## Implementation Progress
+
+### Phase 1: Foundation & Authentication ✅
+- [x] Design system with warm color palette (soft oranges, gentle yellows, cream backgrounds)
+- [x] Database schema with profiles, food_logs, daily_status, daily_spend tables
+- [x] Row-level security policies for all tables
+- [x] Authentication flow (login/signup with email verification)
+- [x] Onboarding screen for diet type selection
+- [x] Basic dashboard layout
+
+### Next Up: Phase 2 - Food Logging
+- [ ] Food entry interface with 6 category buttons
+- [ ] Portion size selector
+- [ ] Food presets database
+- [ ] Price tracking for applicable categories
+- [ ] Custom food entries
 
 The weekly/monthly views, pattern awareness, and money tracking will be added as we expand.
 
