@@ -8,6 +8,7 @@ import DailySnapshotCard from '@/components/food/DailySnapshotCard';
 import FoodLogList from '@/components/food/FoodLogList';
 import EndOfDayStatus from '@/components/food/EndOfDayStatus';
 import LogFoodSheet from '@/components/food/LogFoodSheet';
+import WeeklyReflection from '@/components/weekly/WeeklyReflection';
 
 export default function Dashboard() {
   const { profile, signOut } = useAuth();
