@@ -53,6 +53,9 @@ export default function Dashboard() {
 
         {/* Food log list */}
         <FoodLogList logs={logs} onDelete={deleteLog} />
+
+        {/* Weekly reflection */}
+        <WeeklyReflection />
       </main>
 
       {/* Floating add button */}
