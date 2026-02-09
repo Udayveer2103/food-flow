@@ -25,7 +25,7 @@ export default function EndOfDayStatus({ status }: Props) {
           <p className="text-xs text-muted-foreground">
             {status === 'balanced'
               ? 'Calories and protein look on track today.'
-              : 'Some gaps today — that's completely normal.'}
+              : "Some gaps today — that's completely normal."}
           </p>
         </div>
       </CardContent>
