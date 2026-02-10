@@ -16,6 +16,7 @@ import BottomNav from '@/components/layout/BottomNav';
 export default function Dashboard() {
   const { profile, signOut } = useAuth();
   const { logs, saving, snapshot, addLog, deleteLog } = useFoodLogs();
+  const { todaySpend } = useMoneyLog();
   const [sheetOpen, setSheetOpen] = useState(false);
 
   return (
