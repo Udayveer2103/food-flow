@@ -1,10 +1,10 @@
 import { NavLink } from 'react-router-dom';
-import { Utensils, IndianRupee } from 'lucide-react';
+import { Utensils, BarChart3 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const navItems = [
-  { to: '/', label: 'Food', icon: Utensils },
-  { to: '/money', label: 'Money', icon: IndianRupee },
+  { to: '/', label: 'Home', icon: Utensils },
+  { to: '/trends', label: 'Trends', icon: BarChart3 },
 ];
 
 export default function BottomNav() {
@@ -15,6 +15,7 @@ export default function BottomNav() {
           <NavLink
             key={item.to}
             to={item.to}
+            end
             className={({ isActive }) =>
               cn(
                 'flex flex-col items-center gap-0.5 text-xs font-medium transition-colors',
