@@ -85,6 +85,8 @@ export default function Dashboard() {
         saving={saving}
         onSave={addLog}
       />
+
+      <BottomNav />
     </div>
   );
 }
