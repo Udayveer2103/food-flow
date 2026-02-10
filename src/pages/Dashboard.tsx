@@ -52,6 +52,9 @@ export default function Dashboard() {
         {/* Snapshot */}
         <DailySnapshotCard snapshot={snapshot} />
 
+        {/* Today's spend (only if price data exists) */}
+        <DailySpendCard spend={todaySpend} />
+
         {/* End of day status */}
         <EndOfDayStatus status={snapshot.dayStatus} />
 
