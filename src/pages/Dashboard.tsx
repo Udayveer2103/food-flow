@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { useFoodLogs } from '@/hooks/useFoodLogs';
+import { useMoneyLog } from '@/hooks/useMoneyLog';
 import { Button } from '@/components/ui/button';
 import { Utensils, LogOut, Plus } from 'lucide-react';
 import { DIET_TYPE_LABELS } from '@/types/database';
@@ -9,6 +10,8 @@ import FoodLogList from '@/components/food/FoodLogList';
 import EndOfDayStatus from '@/components/food/EndOfDayStatus';
 import LogFoodSheet from '@/components/food/LogFoodSheet';
 import WeeklyReflection from '@/components/weekly/WeeklyReflection';
+import DailySpendCard from '@/components/money/DailySpendCard';
+import BottomNav from '@/components/layout/BottomNav';
 
 export default function Dashboard() {
   const { profile, signOut } = useAuth();
