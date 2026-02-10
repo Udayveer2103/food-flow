@@ -80,10 +80,10 @@ function AppRoutes() {
         }
       />
       <Route
-        path="/money"
+        path="/trends"
         element={
           <ProtectedRoute>
-            <MoneyLog />
+            <WeeklyTrends />
           </ProtectedRoute>
         }
       />
