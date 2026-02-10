@@ -8,6 +8,7 @@ import Auth from "./pages/Auth";
 import Onboarding from "./pages/Onboarding";
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
+import MoneyLog from "./pages/MoneyLog";
 import { Loader2 } from "lucide-react";
 
 const queryClient = new QueryClient();
@@ -75,6 +76,14 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <Dashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/money"
+        element={
+          <ProtectedRoute>
+            <MoneyLog />
           </ProtectedRoute>
         }
       />
