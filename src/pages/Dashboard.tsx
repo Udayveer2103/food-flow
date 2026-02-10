@@ -4,7 +4,9 @@ import { useFoodLogs } from '@/hooks/useFoodLogs';
 import { useMoneyLog } from '@/hooks/useMoneyLog';
 import { Button } from '@/components/ui/button';
 import { Utensils, LogOut, Plus } from 'lucide-react';
-import { DIET_TYPE_LABELS } from '@/types/database';
+import { DIET_TYPE_LABELS, FOOD_TYPE_LABELS } from '@/types/database';
+import { FOOD_TYPE_ICONS } from '@/data/foodPresets';
+import { Card, CardContent } from '@/components/ui/card';
 import DailySnapshotCard from '@/components/food/DailySnapshotCard';
 import FoodLogList from '@/components/food/FoodLogList';
 import EndOfDayStatus from '@/components/food/EndOfDayStatus';
@@ -12,12 +14,25 @@ import LogFoodSheet from '@/components/food/LogFoodSheet';
 import WeeklyReflection from '@/components/weekly/WeeklyReflection';
 import DailySpendCard from '@/components/money/DailySpendCard';
 import BottomNav from '@/components/layout/BottomNav';
+import { format, parseISO, isToday, isYesterday } from 'date-fns';
+import { Loader2, IndianRupee } from 'lucide-react';
+import { cn } from '@/lib/utils';
+
+type TabValue = 'food' | 'money';
+
+function formatDateLabel(dateStr: string): string {
+  const date = parseISO(dateStr);
+  if (isToday(date)) return 'Today';
+  if (isYesterday(date)) return 'Yesterday';
+  return format(date, 'EEE, d MMM');
+}
 
 export default function Dashboard() {
   const { profile, signOut } = useAuth();
   const { logs, saving, snapshot, addLog, deleteLog } = useFoodLogs();
-  const { todaySpend } = useMoneyLog();
+  const { days, loading: moneyLoading, todaySpend } = useMoneyLog();
   const [sheetOpen, setSheetOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<TabValue>('food');
 
   return (
     <div className="min-h-screen bg-background">
@@ -49,35 +64,112 @@ export default function Dashboard() {
           )}
         </div>
 
-        {/* Snapshot */}
-        <DailySnapshotCard snapshot={snapshot} />
+        {/* Segmented Control */}
+        <div className="flex rounded-xl bg-muted/50 p-1">
+          <button
+            onClick={() => setActiveTab('food')}
+            className={cn(
+              'flex-1 rounded-lg py-2 text-sm font-medium transition-all',
+              activeTab === 'food'
+                ? 'bg-card text-foreground shadow-sm'
+                : 'text-muted-foreground hover:text-foreground'
+            )}
+          >
+            Food Log
+          </button>
+          <button
+            onClick={() => setActiveTab('money')}
+            className={cn(
+              'flex-1 rounded-lg py-2 text-sm font-medium transition-all',
+              activeTab === 'money'
+                ? 'bg-card text-foreground shadow-sm'
+                : 'text-muted-foreground hover:text-foreground'
+            )}
+          >
+            Money Log
+          </button>
+        </div>
 
-        {/* Today's spend (only if price data exists) */}
-        <DailySpendCard spend={todaySpend} />
+        {/* Food Tab */}
+        {activeTab === 'food' && (
+          <div className="space-y-4 animate-fade-in">
+            <DailySnapshotCard snapshot={snapshot} />
+            <DailySpendCard spend={todaySpend} />
+            <EndOfDayStatus status={snapshot.dayStatus} />
+            <FoodLogList logs={logs} onDelete={deleteLog} />
+            <WeeklyReflection />
+          </div>
+        )}
 
-        {/* End of day status */}
-        <EndOfDayStatus status={snapshot.dayStatus} />
-
-        {/* Food log list */}
-        <FoodLogList logs={logs} onDelete={deleteLog} />
-
-        {/* Weekly reflection */}
-        <WeeklyReflection />
+        {/* Money Tab */}
+        {activeTab === 'money' && (
+          <div className="space-y-4 animate-fade-in">
+            {moneyLoading ? (
+              <div className="flex justify-center py-12">
+                <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+              </div>
+            ) : days.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-16 text-center">
+                <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-muted/40">
+                  <IndianRupee className="h-6 w-6 text-muted-foreground" />
+                </div>
+                <p className="text-sm text-muted-foreground">No spend data yet</p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Prices are logged when you add outside food or add-ons
+                </p>
+              </div>
+            ) : (
+              days.map((day) => (
+                <Card key={day.date} className="border-0 shadow-md">
+                  <CardContent className="pt-5 pb-4">
+                    <div className="flex items-center justify-between mb-3">
+                      <p className="text-sm font-semibold text-foreground">
+                        {formatDateLabel(day.date)}
+                      </p>
+                      <p className="text-sm font-semibold text-foreground">₹{day.totalSpend}</p>
+                    </div>
+                    <div className="flex gap-4 text-xs text-muted-foreground mb-3">
+                      {day.outsideSpend > 0 && <span>Outside: ₹{day.outsideSpend}</span>}
+                      {day.addonSpend > 0 && <span>Add-ons: ₹{day.addonSpend}</span>}
+                    </div>
+                    <div className="space-y-1.5">
+                      {day.entries.map((entry) => (
+                        <div
+                          key={entry.id}
+                          className="flex items-center gap-3 rounded-xl bg-muted/20 px-3 py-2.5"
+                        >
+                          <span className="text-base">
+                            {FOOD_TYPE_ICONS[entry.food_type]}
+                          </span>
+                          <span className="flex-1 text-sm text-foreground truncate">
+                            {entry.food_name || FOOD_TYPE_LABELS[entry.food_type]}
+                          </span>
+                          <span className="text-sm font-medium text-foreground">
+                            ₹{entry.price_amount}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))
+            )}
+          </div>
+        )}
       </main>
 
-      {/* Floating add button */}
-      <div className="fixed bottom-6 left-0 right-0 flex justify-center z-20">
+      {/* Floating add button — always visible */}
+      <div className="fixed bottom-20 left-0 right-0 flex justify-center z-20 pointer-events-none">
         <Button
           size="lg"
           onClick={() => setSheetOpen(true)}
-          className="h-14 px-8 rounded-2xl text-base font-medium shadow-lg"
+          className="h-14 px-8 rounded-2xl text-base font-medium shadow-lg pointer-events-auto"
         >
           <Plus className="mr-2 h-5 w-5" />
           Log Food
         </Button>
       </div>
 
-      {/* Log food sheet */}
       <LogFoodSheet
         open={sheetOpen}
         onOpenChange={setSheetOpen}
