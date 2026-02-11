@@ -16,7 +16,11 @@ export default function WeeklyReflection() {
       {/* Streak text — always visible if any logs */}
       {loggedDays > 0 && (
         <p className="text-sm text-muted-foreground text-center">
-          {balancedDays} of 7 days balanced this week
+          {balancedDays === 0
+            ? 'Balance was varied this week'
+            : balancedDays >= 5
+              ? 'Balance was steady this week'
+              : `${balancedDays} of ${loggedDays} logged days were balanced`}
         </p>
       )}
 
