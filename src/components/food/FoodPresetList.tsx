@@ -35,6 +35,7 @@ export default function FoodPresetList({ foodType, dietType, selectedPreset, onS
             <div>
               <p className="text-sm font-medium text-foreground">{preset.name}</p>
               <p className="text-xs text-muted-foreground">
+                {preset.description && <span>{preset.description} · </span>}
                 {preset.calorie_min}–{preset.calorie_max} cal · {preset.protein_amount}g protein
               </p>
             </div>
