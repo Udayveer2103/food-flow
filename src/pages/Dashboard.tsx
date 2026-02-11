@@ -99,6 +99,7 @@ export default function Dashboard() {
             <EndOfDayStatus status={snapshot.dayStatus} />
             <FoodLogList logs={logs} onDelete={deleteLog} />
             <WeeklyReflection />
+            <RecentPatterns />
           </div>
         )}
 
