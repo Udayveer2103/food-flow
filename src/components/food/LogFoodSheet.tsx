@@ -7,7 +7,8 @@ import { FoodPresetData } from '@/data/foodPresets';
 import FoodCategoryPicker from './FoodCategoryPicker';
 import PortionPicker from './PortionPicker';
 import FoodPresetList from './FoodPresetList';
-import { Loader2 } from 'lucide-react';
+import { saveLastTemplate } from './QuickAddRow';
+import { Loader2, Check } from 'lucide-react';
 
 interface Props {
   open: boolean;
