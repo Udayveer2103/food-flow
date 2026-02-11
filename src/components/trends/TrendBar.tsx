@@ -5,37 +5,43 @@ interface TrendBarProps {
 }
 
 export default function TrendBar({ items }: TrendBarProps) {
-  const maxCount = Math.max(...items.map((i) => i.count), 1);
+  const total = items.reduce((s, i) => s + i.count, 0);
+  if (total === 0) return null;
 
   return (
-    <div className="space-y-2.5">
-      {items.map((item) => (
-        <div key={item.label} className="flex items-center gap-3">
-          <span className="text-xs text-muted-foreground w-16 text-right shrink-0">
-            {item.label}
-          </span>
-          <div className="flex-1 h-6 bg-muted/30 rounded-full overflow-hidden">
+    <div className="space-y-3">
+      {/* Single stacked horizontal bar */}
+      <div className="h-7 flex rounded-full overflow-hidden bg-muted/30">
+        {items.map((item, idx) => {
+          const pct = (item.count / total) * 100;
+          if (pct === 0) return null;
+          return (
             <div
-              className="h-full rounded-full transition-all duration-500"
+              key={item.label}
+              className="h-full transition-all duration-700 ease-out"
               style={{
-                width: `${Math.max((item.count / maxCount) * 100, 4)}%`,
+                width: `${pct}%`,
                 backgroundColor: item.color,
                 opacity: 0.75,
+                borderTopLeftRadius: idx === 0 ? '9999px' : 0,
+                borderBottomLeftRadius: idx === 0 ? '9999px' : 0,
+                borderTopRightRadius: idx === items.length - 1 || items.slice(idx + 1).every(i => i.count === 0) ? '9999px' : 0,
+                borderBottomRightRadius: idx === items.length - 1 || items.slice(idx + 1).every(i => i.count === 0) ? '9999px' : 0,
               }}
             />
-          </div>
-        </div>
-      ))}
+          );
+        })}
+      </div>
       {/* Legend */}
-      <div className="flex flex-wrap gap-3 pt-1">
-        {items.map((item) => (
+      <div className="flex flex-wrap gap-3">
+        {items.filter(i => i.count > 0).map((item) => (
           <div key={item.label} className="flex items-center gap-1.5">
             <div
               className="h-2.5 w-2.5 rounded-full"
               style={{ backgroundColor: item.color, opacity: 0.75 }}
             />
             <span className="text-[11px] text-muted-foreground">
-              {item.label} ({item.count})
+              {item.label}
             </span>
           </div>
         ))}

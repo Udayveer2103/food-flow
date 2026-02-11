@@ -27,8 +27,8 @@ interface Props {
 }
 
 function getPriceBand(amount: number): PriceBand {
-  if (amount <= 50) return 'low';
-  if (amount <= 150) return 'medium';
+  if (amount <= 30) return 'low';
+  if (amount <= 80) return 'medium';
   return 'high';
 }
 
