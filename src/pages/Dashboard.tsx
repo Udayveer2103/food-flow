@@ -12,6 +12,7 @@ import FoodLogList from '@/components/food/FoodLogList';
 import EndOfDayStatus from '@/components/food/EndOfDayStatus';
 import LogFoodSheet from '@/components/food/LogFoodSheet';
 import WeeklyReflection from '@/components/weekly/WeeklyReflection';
+import RecentPatterns from '@/components/patterns/RecentPatterns';
 import DailySpendCard from '@/components/money/DailySpendCard';
 import BottomNav from '@/components/layout/BottomNav';
 import { format, parseISO, isToday, isYesterday } from 'date-fns';
