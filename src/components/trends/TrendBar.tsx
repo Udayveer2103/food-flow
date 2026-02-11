@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { DistributionItem } from '@/hooks/useWeeklyTrends';
 
 interface TrendBarProps {
@@ -6,6 +7,13 @@ interface TrendBarProps {
 
 export default function TrendBar({ items }: TrendBarProps) {
   const total = items.reduce((s, i) => s + i.count, 0);
+  const [animated, setAnimated] = useState(false);
+
+  useEffect(() => {
+    const t = setTimeout(() => setAnimated(true), 50);
+    return () => clearTimeout(t);
+  }, []);
+
   if (total === 0) return null;
 
   return (
@@ -20,7 +28,7 @@ export default function TrendBar({ items }: TrendBarProps) {
               key={item.label}
               className="h-full transition-all duration-700 ease-out"
               style={{
-                width: `${pct}%`,
+                width: animated ? `${pct}%` : '0%',
                 backgroundColor: item.color,
                 opacity: 0.75,
                 borderTopLeftRadius: idx === 0 ? '9999px' : 0,

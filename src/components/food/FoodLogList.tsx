@@ -22,14 +22,15 @@ export default function FoodLogList({ logs, onDelete }: Props) {
             <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-muted/40">
               <Utensils className="h-6 w-6 text-muted-foreground" />
             </div>
-            <p className="text-sm text-muted-foreground">Nothing logged yet today</p>
+            <p className="text-sm text-muted-foreground">Nothing logged yet today.</p>
+            <p className="text-xs text-muted-foreground mt-1">Tap "Log Food" to get started.</p>
           </div>
         ) : (
           <div className="space-y-2">
             {logs.map((log) => (
               <div
                 key={log.id}
-                className="flex items-start gap-3 rounded-xl bg-muted/20 p-3 group"
+                className="flex items-start gap-3 rounded-xl bg-muted/20 p-3 group transition-all duration-150 hover:shadow-sm"
               >
                 <span className="text-xl mt-0.5">{FOOD_TYPE_ICONS[log.food_type]}</span>
                 <div className="flex-1 min-w-0">
@@ -39,7 +40,7 @@ export default function FoodLogList({ logs, onDelete }: Props) {
                     </p>
                     <button
                       onClick={() => onDelete(log.id)}
-                      className="opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded-lg hover:bg-destructive/10"
+                      className="opacity-0 group-hover:opacity-100 transition-opacity duration-150 p-1 rounded-lg hover:bg-destructive/10"
                       aria-label="Remove log"
                     >
                       <Trash2 className="h-3.5 w-3.5 text-muted-foreground" />

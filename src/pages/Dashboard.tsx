@@ -14,6 +14,7 @@ import LogFoodSheet from '@/components/food/LogFoodSheet';
 import WeeklyReflection from '@/components/weekly/WeeklyReflection';
 import RecentPatterns from '@/components/patterns/RecentPatterns';
 import DailySpendCard from '@/components/money/DailySpendCard';
+import QuickAddRow, { saveLastTemplate } from '@/components/food/QuickAddRow';
 import BottomNav from '@/components/layout/BottomNav';
 import { format, parseISO, isToday, isYesterday } from 'date-fns';
 import { Loader2, IndianRupee } from 'lucide-react';
@@ -34,6 +35,15 @@ export default function Dashboard() {
   const { days, loading: moneyLoading, todaySpend } = useMoneyLog();
   const [sheetOpen, setSheetOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<TabValue>('food');
+
+  // Wrap addLog to also save last template
+  const handleAddLog = async (params: Parameters<typeof addLog>[0]) => {
+    const result = await addLog(params);
+    if (!result.error && params.food_type && params.food_name) {
+      saveLastTemplate(params.food_type, params.food_name);
+    }
+    return result;
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -70,7 +80,7 @@ export default function Dashboard() {
           <button
             onClick={() => setActiveTab('food')}
             className={cn(
-              'flex-1 rounded-lg py-2 text-sm font-medium transition-all',
+              'flex-1 rounded-lg py-2 text-sm font-medium transition-all duration-150',
               activeTab === 'food'
                 ? 'bg-card text-foreground shadow-sm'
                 : 'text-muted-foreground hover:text-foreground'
@@ -81,7 +91,7 @@ export default function Dashboard() {
           <button
             onClick={() => setActiveTab('money')}
             className={cn(
-              'flex-1 rounded-lg py-2 text-sm font-medium transition-all',
+              'flex-1 rounded-lg py-2 text-sm font-medium transition-all duration-150',
               activeTab === 'money'
                 ? 'bg-card text-foreground shadow-sm'
                 : 'text-muted-foreground hover:text-foreground'
@@ -91,14 +101,32 @@ export default function Dashboard() {
           </button>
         </div>
 
-        {/* Food Tab */}
+        {/* Food Tab — reordered hierarchy */}
         {activeTab === 'food' && (
           <div className="space-y-4 animate-fade-in">
+            {/* 1. Daily Snapshot */}
             <DailySnapshotCard snapshot={snapshot} />
+
+            {/* 2. Quick Add Row */}
+            <QuickAddRow
+              dietType={profile?.diet_type ?? null}
+              saving={saving}
+              onQuickAdd={handleAddLog}
+            />
+
+            {/* 3. Today's Spend */}
             <DailySpendCard spend={todaySpend} />
+
+            {/* 4. End of Day Status */}
             <EndOfDayStatus status={snapshot.dayStatus} />
+
+            {/* 5. Today's Entries */}
             <FoodLogList logs={logs} onDelete={deleteLog} />
+
+            {/* 6. Weekly Summary */}
             <WeeklyReflection />
+
+            {/* 7. Recent Patterns */}
             <RecentPatterns />
           </div>
         )}
@@ -160,12 +188,12 @@ export default function Dashboard() {
         )}
       </main>
 
-      {/* Floating add button — always visible */}
+      {/* Floating add button — always visible, safe position */}
       <div className="fixed bottom-20 left-0 right-0 flex justify-center z-20 pointer-events-none">
         <Button
           size="lg"
           onClick={() => setSheetOpen(true)}
-          className="h-14 px-8 rounded-2xl text-base font-medium shadow-lg pointer-events-auto"
+          className="h-14 px-8 rounded-2xl text-base font-medium shadow-lg pointer-events-auto transition-transform duration-150 active:scale-[0.97]"
         >
           <Plus className="mr-2 h-5 w-5" />
           Log Food
@@ -177,7 +205,7 @@ export default function Dashboard() {
         onOpenChange={setSheetOpen}
         dietType={profile?.diet_type ?? null}
         saving={saving}
-        onSave={addLog}
+        onSave={handleAddLog}
       />
 
       <BottomNav />
