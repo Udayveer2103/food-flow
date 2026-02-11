@@ -34,7 +34,7 @@ export default function DailySnapshotCard({ snapshot }: Props) {
       <CardContent>
         {!hasLogs ? (
           <p className="text-sm text-muted-foreground py-2">
-            No food logged yet today.
+            Nothing logged yet today.
           </p>
         ) : (
           <div className="grid grid-cols-2 gap-3">
