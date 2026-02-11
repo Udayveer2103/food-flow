@@ -16,7 +16,11 @@ export default function WeeklyReflection() {
       {/* Streak text — always visible if any logs */}
       {loggedDays > 0 && (
         <p className="text-sm text-muted-foreground text-center">
-          {balancedDays} of 7 days balanced this week
+          {balancedDays === 0
+            ? 'Balance was varied this week'
+            : balancedDays >= 5
+              ? 'Balance was steady this week'
+              : `${balancedDays} of ${loggedDays} logged days were balanced`}
         </p>
       )}
 
@@ -52,9 +56,18 @@ export default function WeeklyReflection() {
             <CardTitle className="text-base">This Week</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2.5">
-            <Row label="Balanced days" value={`${balancedDays}`} />
-            <Row label="Avg. protein" value={`~${avgProtein}g`} />
-            {mostCommonSource && <Row label="Most common source" value={mostCommonSource} />}
+            <Row
+              label="Balance"
+              value={
+                balancedDays === 0
+                  ? 'Mixed'
+                  : balancedDays >= loggedDays * 0.7
+                    ? 'Steady'
+                    : 'Varied'
+              }
+            />
+            <Row label="Protein" value={`~${avgProtein}g avg`} />
+            {mostCommonSource && <Row label="Frequent source" value={mostCommonSource} />}
             {predominantPriceBand && (
               <Row label="Typical spend" value={PRICE_BAND_LABELS[predominantPriceBand]} />
             )}
