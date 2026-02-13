@@ -16,7 +16,7 @@ export default function WeeklyTrends() {
             <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary">
               <BarChart3 className="h-4.5 w-4.5 text-primary-foreground" />
             </div>
-            <span className="text-lg font-bold">Weekly Trends</span>
+            <span className="text-lg font-semibold">Weekly Trends</span>
           </div>
         </div>
       </header>
@@ -31,9 +31,9 @@ export default function WeeklyTrends() {
             <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-muted/40">
               <BarChart3 className="h-6 w-6 text-muted-foreground" />
             </div>
-            <p className="text-sm text-muted-foreground">Not enough data yet</p>
+            <p className="text-sm text-muted-foreground">Trends will appear with more data.</p>
             <p className="text-xs text-muted-foreground mt-1">
-              Log food on at least 2 days this week to see trends
+              Log on at least 2 days this week
             </p>
           </div>
         ) : (
@@ -81,11 +81,10 @@ function TrendSection({ title, children }: { title: string; children: React.Reac
   return (
     <Card className="border-0 shadow-sm">
       <CardHeader className="p-4 pb-2">
-        <CardTitle className="text-base font-semibold">{title}</CardTitle>
+        <CardTitle className="text-sm font-medium text-muted-foreground">{title}</CardTitle>
       </CardHeader>
       <CardContent className="px-4 pb-4 pt-0 space-y-4">
         {children}
-        <p className="text-[11px] text-muted-foreground">Based on days you logged</p>
       </CardContent>
     </Card>
   );

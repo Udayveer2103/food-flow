@@ -54,7 +54,7 @@ export default function Dashboard() {
             <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary">
               <Utensils className="h-4.5 w-4.5 text-primary-foreground" />
             </div>
-            <span className="text-lg font-bold">Calieori</span>
+            <span className="text-lg font-semibold">Calieori</span>
           </div>
           <Button variant="ghost" size="icon" onClick={() => signOut()}>
             <LogOut className="h-5 w-5" />
@@ -66,7 +66,7 @@ export default function Dashboard() {
       <main className="container py-6 space-y-6 pb-24">
         {/* Greeting */}
         <div className="animate-fade-in">
-          <h1 className="text-lg font-semibold">Hi there! 👋</h1>
+          <h1 className="text-base font-medium text-foreground">Hi there 👋</h1>
           {profile?.diet_type && (
             <p className="text-sm text-muted-foreground">
               {DIET_TYPE_LABELS[profile.diet_type]} diet
@@ -140,12 +140,12 @@ export default function Dashboard() {
               </div>
             ) : days.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-16 text-center">
-                <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-muted/40">
+              <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-muted/40">
                   <IndianRupee className="h-6 w-6 text-muted-foreground" />
                 </div>
-                <p className="text-sm text-muted-foreground">No spend data yet</p>
+                <p className="text-sm text-muted-foreground">No spending logged yet.</p>
                 <p className="text-xs text-muted-foreground mt-1">
-                  Prices are logged when you add outside food or add-ons
+                  Spending appears when you log outside food or add-ons.
                 </p>
               </div>
             ) : (

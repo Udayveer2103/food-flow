@@ -19,8 +19,8 @@ const STATUS_STYLES = {
 };
 
 const STATUS_LABEL = {
-  calorie: { low: 'Low', ok: 'On track', high: 'High' },
-  protein: { low: 'Low', ok: 'On track' },
+  calorie: { low: 'Lower', ok: 'Within range', high: 'Higher' },
+  protein: { low: 'Lower', ok: 'Within range' },
 };
 
 export default function DailySnapshotCard({ snapshot }: Props) {

@@ -17,10 +17,10 @@ export default function WeeklyReflection() {
       {loggedDays > 0 && (
         <p className="text-sm text-muted-foreground text-center">
           {balancedDays === 0
-            ? 'Balance was varied this week'
+            ? 'Balance was mixed this week'
             : balancedDays >= 5
               ? 'Balance was steady this week'
-              : `${balancedDays} of ${loggedDays} logged days were balanced`}
+              : 'Balance varied across logged days'}
         </p>
       )}
 
@@ -42,9 +42,6 @@ export default function WeeklyReflection() {
                 </div>
               ))}
             </div>
-            <p className="text-[11px] text-muted-foreground text-center mt-4">
-              Based on days you logged
-            </p>
           </CardContent>
         </Card>
       )}
@@ -53,9 +50,9 @@ export default function WeeklyReflection() {
       {hasEnoughData && (
         <Card className="border-0 shadow-sm">
           <CardHeader className="p-4 pb-2">
-            <CardTitle className="text-base font-semibold">This Week</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">This Week</CardTitle>
           </CardHeader>
-          <CardContent className="px-4 pb-4 pt-0 space-y-3">
+          <CardContent className="px-4 pb-4 pt-0 space-y-2">
             <Row
               label="Balance"
               value={
@@ -67,13 +64,10 @@ export default function WeeklyReflection() {
               }
             />
             <Row label="Protein" value={`~${avgProtein}g avg`} />
-            {mostCommonSource && <Row label="Frequent source" value={mostCommonSource} />}
+            {mostCommonSource && <Row label="Top source" value={mostCommonSource} />}
             {predominantPriceBand && (
               <Row label="Typical spend" value={PRICE_BAND_LABELS[predominantPriceBand]} />
             )}
-            <p className="text-[11px] text-muted-foreground pt-1">
-              Based on days you logged
-            </p>
           </CardContent>
         </Card>
       )}

@@ -81,7 +81,7 @@ export function useRecentPatterns(): RecentPatterns {
       if (ratio >= 0.7) {
         weeklyInsights.push({ id: 'protein', type: 'weekly', text: 'Protein levels were steady on most logged days.' });
       } else if (ratio <= 0.3) {
-        weeklyInsights.push({ id: 'protein', type: 'weekly', text: 'Protein levels were on the lower side across logged days.' });
+        weeklyInsights.push({ id: 'protein', type: 'weekly', text: 'Protein levels were lower on some logged days.' });
       } else {
         weeklyInsights.push({ id: 'protein', type: 'weekly', text: 'Protein levels varied across logged days.' });
       }
