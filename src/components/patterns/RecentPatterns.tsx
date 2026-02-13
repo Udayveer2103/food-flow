@@ -37,12 +37,12 @@ export default function RecentPatterns() {
   return (
     <Card className="border-0 shadow-sm animate-fade-in">
       <CardHeader className="p-4 pb-2">
-        <CardTitle className="text-base font-semibold flex items-center gap-2">
-          <Eye className="h-4 w-4 text-muted-foreground" />
-          Your Recent Patterns
+        <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+          <Eye className="h-3.5 w-3.5" />
+          Recent Patterns
         </CardTitle>
       </CardHeader>
-      <CardContent className="px-4 pb-4 pt-0 space-y-4">
+      <CardContent className="px-4 pb-4 pt-0 space-y-3">
         <div
           key={current.id + activeIndex}
           className="rounded-xl bg-muted/20 px-3.5 py-2.5 animate-fade-in"
@@ -68,10 +68,6 @@ export default function RecentPatterns() {
             ))}
           </div>
         )}
-
-        <p className="text-[11px] text-muted-foreground">
-          Based on days you logged
-        </p>
       </CardContent>
     </Card>
   );
