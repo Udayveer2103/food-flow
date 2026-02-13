@@ -59,7 +59,7 @@ export default function FoodPresetList({ foodType, dietType, selectedPreset, onS
   return (
     <div className="space-y-2">
       <p className="text-sm font-medium text-muted-foreground">Choose an item</p>
-      <div className="space-y-1.5">
+      <div className="space-y-2">
         {presets.map((preset) => (
           <PresetButton
             key={preset.name}
@@ -91,13 +91,13 @@ function CollapsibleGroup({
     <div className="rounded-xl bg-card overflow-hidden">
       <button
         onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between px-4 py-2.5 text-sm font-medium text-foreground"
+        className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-foreground"
       >
         <span>{label}</span>
         <ChevronDown className={cn('h-4 w-4 text-muted-foreground transition-transform duration-200', open && 'rotate-180')} />
       </button>
       {open && (
-        <div className="px-2 pb-2 space-y-1.5 animate-fade-in">
+        <div className="px-2 pb-2 space-y-2 animate-fade-in">
           {presets.map((preset) => (
             <PresetButton
               key={preset.name}
@@ -123,7 +123,7 @@ function PresetButton({ preset, selected, highlighted, onSelect }: {
     <button
       onClick={() => onSelect(preset)}
       className={cn(
-        'w-full flex items-center justify-between rounded-xl border-2 px-4 py-3 text-left transition-all duration-200',
+        'w-full flex items-center justify-between rounded-xl border-2 px-4 py-4 text-left transition-all duration-200',
         'hover:border-primary/40 active:scale-[0.99]',
         selected
           ? 'border-primary bg-accent'

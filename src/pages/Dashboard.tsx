@@ -63,10 +63,10 @@ export default function Dashboard() {
       </header>
 
       {/* Main */}
-      <main className="container py-5 space-y-4 pb-24">
+      <main className="container py-6 space-y-6 pb-24">
         {/* Greeting */}
         <div className="animate-fade-in">
-          <h1 className="text-xl font-bold">Hi there! 👋</h1>
+          <h1 className="text-lg font-semibold">Hi there! 👋</h1>
           {profile?.diet_type && (
             <p className="text-sm text-muted-foreground">
               {DIET_TYPE_LABELS[profile.diet_type]} diet
@@ -76,11 +76,11 @@ export default function Dashboard() {
         </div>
 
         {/* Segmented Control */}
-        <div className="flex rounded-xl bg-muted/50 p-1">
+        <div className="flex rounded-xl bg-muted/50 p-1 gap-1">
           <button
             onClick={() => setActiveTab('food')}
             className={cn(
-              'flex-1 rounded-lg py-2 text-sm font-medium transition-all duration-150',
+              'flex-1 rounded-lg py-2.5 text-sm font-medium transition-all duration-150',
               activeTab === 'food'
                 ? 'bg-card text-foreground shadow-sm'
                 : 'text-muted-foreground hover:text-foreground'
@@ -91,7 +91,7 @@ export default function Dashboard() {
           <button
             onClick={() => setActiveTab('money')}
             className={cn(
-              'flex-1 rounded-lg py-2 text-sm font-medium transition-all duration-150',
+              'flex-1 rounded-lg py-2.5 text-sm font-medium transition-all duration-150',
               activeTab === 'money'
                 ? 'bg-card text-foreground shadow-sm'
                 : 'text-muted-foreground hover:text-foreground'
@@ -103,7 +103,7 @@ export default function Dashboard() {
 
         {/* Food Tab — reordered hierarchy */}
         {activeTab === 'food' && (
-          <div className="space-y-4 animate-fade-in">
+          <div className="space-y-6 animate-fade-in">
             {/* 1. Daily Snapshot */}
             <DailySnapshotCard snapshot={snapshot} />
 
@@ -133,7 +133,7 @@ export default function Dashboard() {
 
         {/* Money Tab */}
         {activeTab === 'money' && (
-          <div className="space-y-4 animate-fade-in">
+          <div className="space-y-6 animate-fade-in">
             {moneyLoading ? (
               <div className="flex justify-center py-12">
                 <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
@@ -150,15 +150,15 @@ export default function Dashboard() {
               </div>
             ) : (
               days.map((day) => (
-                <Card key={day.date} className="border-0 shadow-md">
-                  <CardContent className="pt-5 pb-4">
-                    <div className="flex items-center justify-between mb-3">
-                      <p className="text-sm font-semibold text-foreground">
+              <Card key={day.date} className="border-0 shadow-sm">
+                  <CardContent className="p-4">
+                    <div className="flex items-center justify-between mb-4">
+                      <p className="text-sm font-medium text-foreground">
                         {formatDateLabel(day.date)}
                       </p>
-                      <p className="text-sm font-semibold text-foreground">₹{day.totalSpend}</p>
+                      <p className="text-sm font-medium text-foreground">₹{day.totalSpend}</p>
                     </div>
-                    <div className="flex gap-4 text-xs text-muted-foreground mb-3">
+                    <div className="flex gap-4 text-xs text-muted-foreground mb-4">
                       {day.outsideSpend > 0 && <span>Outside: ₹{day.outsideSpend}</span>}
                       {day.addonSpend > 0 && <span>Add-ons: ₹{day.addonSpend}</span>}
                     </div>

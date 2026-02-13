@@ -12,7 +12,7 @@ export default function WeeklyReflection() {
   if (loading) return null;
 
   return (
-    <div className="space-y-3 animate-fade-in">
+    <div className="space-y-4 animate-fade-in">
       {/* Streak text — always visible if any logs */}
       {loggedDays > 0 && (
         <p className="text-sm text-muted-foreground text-center">
@@ -26,11 +26,11 @@ export default function WeeklyReflection() {
 
       {/* Consistency dots — always visible */}
       {dots.length > 0 && (
-        <Card className="border-0 shadow-md">
-          <CardContent className="pt-5 pb-4">
-            <div className="flex justify-center gap-3">
+        <Card className="border-0 shadow-sm">
+          <CardContent className="p-4">
+            <div className="flex justify-center gap-4">
               {dots.map((dot, i) => (
-                <div key={dot.date} className="flex flex-col items-center gap-1.5">
+                <div key={dot.date} className="flex flex-col items-center gap-2">
                   <span className="text-[11px] text-muted-foreground font-medium">{DAY_LABELS[i]}</span>
                   <span
                     className={`h-3 w-3 rounded-full ${
@@ -42,7 +42,7 @@ export default function WeeklyReflection() {
                 </div>
               ))}
             </div>
-            <p className="text-[11px] text-muted-foreground text-center mt-3">
+            <p className="text-[11px] text-muted-foreground text-center mt-4">
               Based on days you logged
             </p>
           </CardContent>
@@ -51,11 +51,11 @@ export default function WeeklyReflection() {
 
       {/* Summary card — only if >= 2 logged days */}
       {hasEnoughData && (
-        <Card className="border-0 shadow-md">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-base">This Week</CardTitle>
+        <Card className="border-0 shadow-sm">
+          <CardHeader className="p-4 pb-2">
+            <CardTitle className="text-base font-semibold">This Week</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-2.5">
+          <CardContent className="px-4 pb-4 pt-0 space-y-3">
             <Row
               label="Balance"
               value={

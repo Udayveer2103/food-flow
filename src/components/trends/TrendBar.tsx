@@ -17,9 +17,9 @@ export default function TrendBar({ items }: TrendBarProps) {
   if (total === 0) return null;
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       {/* Single stacked horizontal bar */}
-      <div className="h-7 flex rounded-full overflow-hidden bg-muted/30">
+      <div className="h-3 flex rounded-full overflow-hidden bg-muted/30">
         {items.map((item, idx) => {
           const pct = (item.count / total) * 100;
           if (pct === 0) return null;
@@ -41,9 +41,9 @@ export default function TrendBar({ items }: TrendBarProps) {
         })}
       </div>
       {/* Legend */}
-      <div className="flex flex-wrap gap-3">
+      <div className="flex flex-wrap gap-4">
         {items.filter(i => i.count > 0).map((item) => (
-          <div key={item.label} className="flex items-center gap-1.5">
+          <div key={item.label} className="flex items-center gap-2">
             <div
               className="h-2.5 w-2.5 rounded-full"
               style={{ backgroundColor: item.color, opacity: 0.75 }}

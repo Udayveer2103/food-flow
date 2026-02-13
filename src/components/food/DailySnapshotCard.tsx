@@ -27,20 +27,20 @@ export default function DailySnapshotCard({ snapshot }: Props) {
   const hasLogs = snapshot.logCount > 0;
 
   return (
-    <Card className="border-0 shadow-md animate-fade-in">
-      <CardHeader className="pb-3">
-        <CardTitle className="text-lg">Today's Snapshot</CardTitle>
+    <Card className="border-0 shadow-sm animate-fade-in">
+      <CardHeader className="p-4 pb-2">
+        <CardTitle className="text-base font-semibold">Today's Snapshot</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="px-4 pb-4 pt-0">
         {!hasLogs ? (
           <p className="text-sm text-muted-foreground py-2">
             Nothing logged yet today.
           </p>
         ) : (
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-4">
             {/* Calories */}
             <div className="rounded-xl bg-muted/30 p-4">
-              <p className="text-xs text-muted-foreground mb-1">Calories</p>
+              <p className="text-xs text-muted-foreground mb-2">Calories</p>
               <p className="text-xl font-semibold text-foreground">
                 {snapshot.totalCalorieMin}–{snapshot.totalCalorieMax}
               </p>
@@ -51,7 +51,7 @@ export default function DailySnapshotCard({ snapshot }: Props) {
 
             {/* Protein */}
             <div className="rounded-xl bg-muted/30 p-4">
-              <p className="text-xs text-muted-foreground mb-1">Protein</p>
+              <p className="text-xs text-muted-foreground mb-2">Protein</p>
               <p className="text-xl font-semibold text-foreground">
                 {snapshot.totalProtein}g
               </p>

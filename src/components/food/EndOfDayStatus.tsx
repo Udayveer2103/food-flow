@@ -10,8 +10,8 @@ export default function EndOfDayStatus({ status }: Props) {
   if (!status) return null;
 
   return (
-    <Card className="border-0 shadow-md animate-fade-in">
-      <CardContent className="py-5 flex items-center gap-3">
+    <Card className="border-0 shadow-sm animate-fade-in">
+      <CardContent className="p-4 flex items-center gap-3">
         <div
           className={cn(
             'h-3 w-3 rounded-full',

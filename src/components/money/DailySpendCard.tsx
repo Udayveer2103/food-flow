@@ -10,15 +10,15 @@ export default function DailySpendCard({ spend }: Props) {
   if (!spend.hasData) return null;
 
   return (
-    <Card className="border-0 shadow-md animate-fade-in">
-      <CardContent className="pt-5 pb-4">
-        <div className="flex items-center gap-2 mb-3">
+    <Card className="border-0 shadow-sm animate-fade-in">
+      <CardContent className="p-4">
+        <div className="flex items-center gap-2 mb-4">
           <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-muted/40">
             <IndianRupee className="h-3.5 w-3.5 text-muted-foreground" />
           </div>
           <p className="text-sm font-medium text-foreground">Today's Spend</p>
         </div>
-        <div className="flex items-baseline gap-1 mb-2">
+        <div className="flex items-baseline gap-1 mb-3">
           <span className="text-2xl font-semibold text-foreground">₹{spend.totalSpend}</span>
         </div>
         <div className="flex gap-4 text-xs text-muted-foreground">

@@ -20,8 +20,8 @@ export default function RecentPatterns() {
   if (loading || !hasEnoughData || insights.length === 0) {
     if (!loading && !hasEnoughData) {
       return (
-        <Card className="border-0 shadow-md animate-fade-in">
-          <CardContent className="py-6 text-center">
+        <Card className="border-0 shadow-sm animate-fade-in">
+          <CardContent className="p-4 text-center">
             <p className="text-sm text-muted-foreground">
               Patterns will appear as you log more days.
             </p>
@@ -35,14 +35,14 @@ export default function RecentPatterns() {
   const current = insights[activeIndex];
 
   return (
-    <Card className="border-0 shadow-md animate-fade-in">
-      <CardHeader className="pb-2">
-        <CardTitle className="text-base flex items-center gap-2">
+    <Card className="border-0 shadow-sm animate-fade-in">
+      <CardHeader className="p-4 pb-2">
+        <CardTitle className="text-base font-semibold flex items-center gap-2">
           <Eye className="h-4 w-4 text-muted-foreground" />
           Your Recent Patterns
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-3">
+      <CardContent className="px-4 pb-4 pt-0 space-y-4">
         <div
           key={current.id + activeIndex}
           className="rounded-xl bg-muted/20 px-3.5 py-2.5 animate-fade-in"
@@ -69,7 +69,7 @@ export default function RecentPatterns() {
           </div>
         )}
 
-        <p className="text-[11px] text-muted-foreground pt-0.5">
+        <p className="text-[11px] text-muted-foreground">
           Based on days you logged
         </p>
       </CardContent>
