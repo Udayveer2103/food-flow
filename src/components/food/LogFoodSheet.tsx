@@ -76,7 +76,7 @@ export default function LogFoodSheet({ open, onOpenChange, dietType, saving, onS
           <SheetTitle className="text-lg">Log Food</SheetTitle>
         </SheetHeader>
 
-        <div className="space-y-5">
+        <div className="space-y-6">
           {/* Category */}
           <FoodCategoryPicker selected={category} onSelect={(t) => { setCategory(t); setPreset(null); }} />
 

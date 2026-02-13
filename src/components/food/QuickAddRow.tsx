@@ -75,18 +75,18 @@ export default function QuickAddRow({ dietType, saving, onQuickAdd }: Props) {
 
   return (
     <div className="animate-fade-in">
-      <div className="flex items-center gap-1.5 mb-2">
+      <div className="flex items-center gap-2 mb-3">
         <Zap className="h-3.5 w-3.5 text-muted-foreground" />
         <p className="text-xs font-medium text-muted-foreground">Quick Add</p>
       </div>
-      <div className="flex gap-2 overflow-x-auto pb-1">
+      <div className="flex gap-2 overflow-x-auto">
         {pills.map((pill) => (
           <button
             key={pill.foodType}
             onClick={() => handleQuickAdd(pill)}
             disabled={saving}
             className={cn(
-              'flex items-center gap-1.5 rounded-full border border-border/50 bg-card px-3.5 py-2 text-xs font-medium',
+              'flex items-center gap-2 rounded-full border border-border/50 bg-card px-4 py-2 text-xs font-medium',
               'transition-all duration-200 hover:shadow-sm active:scale-[0.97]',
               'whitespace-nowrap shrink-0',
               justAdded === pill.preset.name && 'border-[hsl(var(--success))] bg-[hsl(var(--success)/0.08)]'

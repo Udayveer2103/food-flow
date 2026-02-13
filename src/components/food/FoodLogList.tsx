@@ -12,11 +12,11 @@ interface Props {
 
 export default function FoodLogList({ logs, onDelete }: Props) {
   return (
-    <Card className="border-0 shadow-md animate-fade-in">
-      <CardHeader className="pb-3">
-        <CardTitle className="text-lg">Today's Log</CardTitle>
+    <Card className="border-0 shadow-sm animate-fade-in">
+      <CardHeader className="p-4 pb-2">
+        <CardTitle className="text-base font-semibold">Today's Log</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="px-4 pb-4 pt-0">
         {logs.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-8 text-center">
             <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-muted/40">
@@ -30,7 +30,7 @@ export default function FoodLogList({ logs, onDelete }: Props) {
             {logs.map((log) => (
               <div
                 key={log.id}
-                className="flex items-start gap-3 rounded-xl bg-muted/20 p-3 group transition-all duration-150 hover:shadow-sm"
+                className="flex items-start gap-3 rounded-xl bg-muted/20 px-4 py-3 group transition-all duration-150 hover:shadow-sm"
               >
                 <span className="text-xl mt-0.5">{FOOD_TYPE_ICONS[log.food_type]}</span>
                 <div className="flex-1 min-w-0">

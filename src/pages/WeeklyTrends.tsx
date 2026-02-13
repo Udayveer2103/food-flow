@@ -21,7 +21,7 @@ export default function WeeklyTrends() {
         </div>
       </header>
 
-      <main className="container py-5 space-y-4 pb-24">
+      <main className="container py-6 space-y-6 pb-24">
         {loading ? (
           <div className="flex justify-center py-12">
             <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
@@ -37,7 +37,7 @@ export default function WeeklyTrends() {
             </p>
           </div>
         ) : (
-          <div className="space-y-4 animate-fade-in">
+          <div className="space-y-6 animate-fade-in">
             {/* Balance Distribution */}
             <TrendSection title="Balance Distribution">
               <TrendBar items={balance} />
@@ -79,13 +79,13 @@ export default function WeeklyTrends() {
 
 function TrendSection({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <Card className="border-0 shadow-md">
-      <CardHeader className="pb-2">
-        <CardTitle className="text-base">{title}</CardTitle>
+    <Card className="border-0 shadow-sm">
+      <CardHeader className="p-4 pb-2">
+        <CardTitle className="text-base font-semibold">{title}</CardTitle>
       </CardHeader>
-      <CardContent className="space-y-2">
+      <CardContent className="px-4 pb-4 pt-0 space-y-4">
         {children}
-        <p className="text-[11px] text-muted-foreground pt-1">Based on days you logged</p>
+        <p className="text-[11px] text-muted-foreground">Based on days you logged</p>
       </CardContent>
     </Card>
   );

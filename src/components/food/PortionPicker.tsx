@@ -16,7 +16,7 @@ export default function PortionPicker({ selected, onSelect }: Props) {
           key={size}
           onClick={() => onSelect(size)}
           className={cn(
-            'flex-1 rounded-xl border-2 py-2.5 px-2 text-center text-sm font-medium transition-all duration-200',
+            'flex-1 rounded-xl border-2 py-3 px-2 text-center text-sm font-medium transition-all duration-200',
             'hover:border-primary/40 active:scale-[0.97]',
             selected === size
               ? 'border-primary bg-accent text-accent-foreground'
