@@ -13,6 +13,7 @@ import EndOfDayStatus from '@/components/food/EndOfDayStatus';
 import LogFoodSheet from '@/components/food/LogFoodSheet';
 import WeeklyReflection from '@/components/weekly/WeeklyReflection';
 import RecentPatterns from '@/components/patterns/RecentPatterns';
+import FoodRhythmCard from '@/components/food/FoodRhythmCard';
 import DailySpendCard from '@/components/money/DailySpendCard';
 import QuickAddRow, { saveLastTemplate } from '@/components/food/QuickAddRow';
 import BottomNav from '@/components/layout/BottomNav';
@@ -126,7 +127,10 @@ export default function Dashboard() {
             {/* 6. Weekly Summary */}
             <WeeklyReflection />
 
-            {/* 7. Recent Patterns */}
+            {/* 7. Food Rhythm */}
+            <FoodRhythmCard />
+
+            {/* 8. Recent Patterns */}
             <RecentPatterns />
           </div>
         )}
