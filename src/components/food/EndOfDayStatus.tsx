@@ -9,8 +9,8 @@ interface Props {
 export default function EndOfDayStatus({ status }: Props) {
   if (!status) return null;
 
-  return (
-    <Card className="border-0 shadow-sm animate-fade-in">
+   return (
+     <Card className="border-0 shadow-xs animate-fade-in">
       <CardContent className="p-4 flex items-center gap-3">
         <div
           className={cn(

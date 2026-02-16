@@ -63,7 +63,7 @@ export default function Dashboard() {
       </header>
 
       {/* Main */}
-      <main className="container py-6 space-y-6 pb-36">
+      <main className="container py-6 space-y-8 pb-36">
         {/* Greeting */}
         <div className="animate-fade-in">
           <h1 className="text-base font-medium text-foreground">Hi there 👋</h1>
@@ -102,8 +102,8 @@ export default function Dashboard() {
         </div>
 
         {/* Food Tab — reordered hierarchy */}
-        {activeTab === 'food' && (
-          <div className="space-y-6 animate-fade-in">
+         {activeTab === 'food' && (
+           <div className="space-y-8 animate-fade-in">
             {/* 1. Daily Snapshot */}
             <DailySnapshotCard snapshot={snapshot} />
 
@@ -132,8 +132,8 @@ export default function Dashboard() {
         )}
 
         {/* Money Tab */}
-        {activeTab === 'money' && (
-          <div className="space-y-6 animate-fade-in">
+         {activeTab === 'money' && (
+           <div className="space-y-8 animate-fade-in">
             {moneyLoading ? (
               <div className="flex justify-center py-12">
                 <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />

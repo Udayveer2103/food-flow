@@ -14,19 +14,19 @@ export default function WeeklyReflection() {
   return (
     <div className="space-y-4 animate-fade-in">
       {/* Streak text — always visible if any logs */}
-      {loggedDays > 0 && (
-        <p className="text-sm text-muted-foreground text-center">
-          {balancedDays === 0
-            ? 'Balance was mixed this week'
-            : balancedDays >= 5
-              ? 'Balance was steady this week'
-              : 'Balance varied across logged days'}
-        </p>
-      )}
+       {loggedDays > 0 && (
+         <p className="text-xs text-muted-foreground/75 text-center">
+           {balancedDays === 0
+             ? 'Balance was mixed this week'
+             : balancedDays >= 5
+               ? 'Balance was steady this week'
+               : 'Balance varied across logged days'}
+         </p>
+       )}
 
-      {/* Consistency dots — always visible */}
-      {dots.length > 0 && (
-        <Card className="border-0 shadow-sm">
+       {/* Consistency dots — always visible */}
+       {dots.length > 0 && (
+         <Card className="border-0 shadow-xs">
           <CardContent className="p-4">
             <div className="flex justify-center gap-4">
               {dots.map((dot, i) => (
@@ -46,9 +46,9 @@ export default function WeeklyReflection() {
         </Card>
       )}
 
-      {/* Summary card — only if >= 2 logged days */}
-      {hasEnoughData && (
-        <Card className="border-0 shadow-sm">
+       {/* Summary card — only if >= 2 logged days */}
+       {hasEnoughData && (
+         <Card className="border-0 shadow-xs">
           <CardHeader className="p-4 pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">This Week</CardTitle>
           </CardHeader>

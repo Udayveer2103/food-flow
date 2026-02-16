@@ -17,9 +17,9 @@ export default function TrendBar({ items }: TrendBarProps) {
   if (total === 0) return null;
 
   return (
-    <div className="space-y-4">
-      {/* Single stacked horizontal bar */}
-      <div className="h-3 flex rounded-full overflow-hidden bg-muted/30">
+     <div className="space-y-6">
+       {/* Single stacked horizontal bar */}
+       <div className="h-3 flex rounded-full overflow-hidden bg-muted/30 my-2">
         {items.map((item, idx) => {
           const pct = (item.count / total) * 100;
           if (pct === 0) return null;

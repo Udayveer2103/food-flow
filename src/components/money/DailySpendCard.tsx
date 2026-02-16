@@ -9,8 +9,8 @@ interface Props {
 export default function DailySpendCard({ spend }: Props) {
   if (!spend.hasData) return null;
 
-  return (
-    <Card className="border-0 shadow-sm animate-fade-in">
+   return (
+     <Card className="border-0 shadow-xs animate-fade-in">
       <CardContent className="p-4">
         <div className="flex items-center gap-2 mb-4">
           <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-muted/40">
