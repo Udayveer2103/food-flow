@@ -63,7 +63,7 @@ export default function Dashboard() {
       </header>
 
       {/* Main */}
-      <main className="container py-6 space-y-6 pb-24">
+      <main className="container py-6 space-y-6 pb-36">
         {/* Greeting */}
         <div className="animate-fade-in">
           <h1 className="text-base font-medium text-foreground">Hi there 👋</h1>
@@ -188,12 +188,12 @@ export default function Dashboard() {
         )}
       </main>
 
-      {/* Floating add button — always visible, safe position */}
-      <div className="fixed bottom-20 left-0 right-0 flex justify-center z-20 pointer-events-none">
+      {/* Sticky bottom action bar */}
+      <div className="fixed bottom-14 left-0 right-0 z-20 border-t bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60 px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))]">
         <Button
           size="lg"
           onClick={() => setSheetOpen(true)}
-          className="h-14 px-8 rounded-2xl text-base font-medium shadow-lg pointer-events-auto transition-transform duration-150 active:scale-[0.97]"
+          className="w-full h-12 rounded-2xl text-base font-medium shadow-sm transition-transform duration-150 active:scale-[0.98]"
         >
           <Plus className="mr-2 h-5 w-5" />
           Log Food
