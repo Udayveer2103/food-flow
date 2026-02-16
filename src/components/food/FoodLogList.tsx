@@ -12,7 +12,7 @@ interface Props {
 
 export default function FoodLogList({ logs, onDelete }: Props) {
   return (
-    <Card className="border-0 shadow-sm animate-fade-in">
+     <Card className="border-0 shadow-xs animate-fade-in">
       <CardHeader className="p-4 pb-2">
         <CardTitle className="text-base font-semibold">Today's Log</CardTitle>
       </CardHeader>

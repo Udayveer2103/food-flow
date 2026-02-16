@@ -78,10 +78,10 @@ export default function WeeklyTrends() {
 }
 
 function TrendSection({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <Card className="border-0 shadow-sm">
-      <CardHeader className="p-4 pb-2">
-        <CardTitle className="text-sm font-medium text-muted-foreground">{title}</CardTitle>
+   return (
+     <Card className="border-0 shadow-xs">
+       <CardHeader className="p-4 pb-2">
+         <CardTitle className="text-xs font-medium text-muted-foreground/75">{title}</CardTitle>
       </CardHeader>
       <CardContent className="px-4 pb-4 pt-0 space-y-4">
         {children}

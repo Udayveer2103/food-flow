@@ -18,11 +18,11 @@ export default function RecentPatterns() {
   }, [insights.length]);
 
   if (loading || !hasEnoughData || insights.length === 0) {
-    if (!loading && !hasEnoughData) {
-      return (
-        <Card className="border-0 shadow-sm animate-fade-in">
-          <CardContent className="p-4 text-center">
-            <p className="text-sm text-muted-foreground">
+     if (!loading && !hasEnoughData) {
+       return (
+         <Card className="border-0 shadow-xs animate-fade-in">
+           <CardContent className="p-4 text-center">
+             <p className="text-sm text-muted-foreground/80">
               Patterns will appear as you log more days.
             </p>
           </CardContent>
@@ -34,10 +34,10 @@ export default function RecentPatterns() {
 
   const current = insights[activeIndex];
 
-  return (
-    <Card className="border-0 shadow-sm animate-fade-in">
-      <CardHeader className="p-4 pb-2">
-        <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+   return (
+     <Card className="border-0 shadow-xs animate-fade-in">
+       <CardHeader className="p-4 pb-2">
+         <CardTitle className="text-xs font-medium text-muted-foreground/75 flex items-center gap-2">
           <Eye className="h-3.5 w-3.5" />
           Recent Patterns
         </CardTitle>

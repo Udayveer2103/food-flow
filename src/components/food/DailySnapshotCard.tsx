@@ -27,7 +27,7 @@ export default function DailySnapshotCard({ snapshot }: Props) {
   const hasLogs = snapshot.logCount > 0;
 
   return (
-    <Card className="border-0 shadow-sm animate-fade-in">
+     <Card className="border-0 shadow-md animate-fade-in">
       <CardHeader className="p-4 pb-2">
         <CardTitle className="text-base font-semibold">Today's Snapshot</CardTitle>
       </CardHeader>
