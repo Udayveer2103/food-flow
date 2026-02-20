@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { FoodType, DietType } from '@/types/database';
-import { FOOD_PRESETS, FoodPresetData } from '@/data/foodPresets';
+import { FOOD_PRESETS, FoodPresetData, OutsideCategory, OUTSIDE_CATEGORIES } from '@/data/foodPresets';
 import { cn } from '@/lib/utils';
-import { ChevronDown } from 'lucide-react';
 import { getLastTemplates } from './QuickAddRow';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 interface Props {
   foodType: FoodType;
@@ -12,47 +12,25 @@ interface Props {
   onSelect: (preset: FoodPresetData) => void;
 }
 
-// Outside food grouping
-const OUTSIDE_GROUPS: { label: string; match: (name: string) => boolean }[] = [
-  { label: 'Popular', match: (n) => ['Maggi / Noodles', 'Biryani', 'Burger', 'Pizza (2 slices)', 'Sandwich / Wrap', 'Momos (6 pcs)', 'Samosa (2 pcs)', 'Chai + Biscuits'].includes(n) },
-  { label: 'Wraps & Rolls', match: (n) => ['Paneer Wrap', 'Aloo Wrap', 'Chicken Tikka Wrap', 'Egg Roll'].includes(n) },
-  { label: 'Grilled / Tikka', match: (n) => ['Grilled Chicken', 'Chicken Tikka', 'Fish Tikka', 'Paneer Tikka'].includes(n) },
-  { label: 'Rice / Heavy Meals', match: (n) => ['Veg Biryani', 'Chicken Biryani', 'Fried Rice (Veg)', 'Fried Rice (Chicken)'].includes(n) },
-  { label: 'Drinks & Sweets', match: (n) => ['Chai', 'Coffee (Milk-based)', 'Hot Chocolate', 'Milkshake'].includes(n) },
-];
-
 export default function FoodPresetList({ foodType, dietType, selectedPreset, onSelect }: Props) {
   const presets = FOOD_PRESETS.filter(
     (p) => p.food_type === foodType && (dietType ? p.diet_types.includes(dietType) : true)
   );
 
-  // Pre-highlight last used template
   const lastTemplates = getLastTemplates();
   const lastUsed = lastTemplates[foodType];
 
   if (presets.length === 0) return null;
 
-  // For outside food, render collapsible groups
   if (foodType === 'outside_food') {
     return (
-      <div className="space-y-2">
-        <p className="text-sm font-medium text-muted-foreground">Choose an item</p>
-        {OUTSIDE_GROUPS.map((group, groupIdx) => {
-          const groupPresets = presets.filter((p) => group.match(p.name));
-          if (groupPresets.length === 0) return null;
-          return (
-            <CollapsibleGroup
-              key={group.label}
-              label={group.label}
-              presets={groupPresets}
-              selectedPreset={selectedPreset}
-              lastUsedName={lastUsed}
-              onSelect={onSelect}
-              defaultOpen={groupIdx === 0}
-            />
-          );
-        })}
-      </div>
+      <OutsideFoodView
+        presets={presets}
+        dietType={dietType}
+        selectedPreset={selectedPreset}
+        lastUsedName={lastUsed}
+        onSelect={onSelect}
+      />
     );
   }
 
@@ -74,41 +52,101 @@ export default function FoodPresetList({ foodType, dietType, selectedPreset, onS
   );
 }
 
-function CollapsibleGroup({
-  label, presets, selectedPreset, lastUsedName, onSelect, defaultOpen,
+function OutsideFoodView({
+  presets,
+  dietType,
+  selectedPreset,
+  lastUsedName,
+  onSelect,
 }: {
-  label: string;
   presets: FoodPresetData[];
+  dietType: DietType | null;
   selectedPreset: FoodPresetData | null;
   lastUsedName?: string;
   onSelect: (p: FoodPresetData) => void;
-  defaultOpen: boolean;
 }) {
-  const hasSelection = presets.some((p) => p.name === selectedPreset?.name);
-  const [open, setOpen] = useState(defaultOpen || hasSelection);
+  const [activeCategory, setActiveCategory] = useState<OutsideCategory>('popular');
+  const [maincourseFilter, setMaincourseFilter] = useState<'all' | 'veg' | 'non_veg'>('all');
+
+  // Filter presets by active category
+  let filtered = presets.filter((p) => p.outside_category === activeCategory);
+
+  // For maincourse, apply veg/non-veg sub-filter
+  if (activeCategory === 'maincourse' && maincourseFilter !== 'all') {
+    if (maincourseFilter === 'veg') {
+      filtered = filtered.filter((p) => p.diet_types.includes('veg'));
+    } else {
+      filtered = filtered.filter((p) => !p.diet_types.includes('veg'));
+    }
+  }
+
+  // Only show categories that have presets for the user's diet
+  const availableCategories = OUTSIDE_CATEGORIES.filter((cat) =>
+    presets.some((p) => p.outside_category === cat.key)
+  );
 
   return (
-    <div className="rounded-xl bg-card overflow-hidden">
-      <button
-        onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-foreground"
-      >
-        <span>{label}</span>
-        <ChevronDown className={cn('h-4 w-4 text-muted-foreground transition-transform duration-200', open && 'rotate-180')} />
-      </button>
-      {open && (
-        <div className="px-2 pb-2 space-y-2 animate-fade-in">
-          {presets.map((preset) => (
-            <PresetButton
-              key={preset.name}
-              preset={preset}
-              selected={selectedPreset?.name === preset.name}
-              highlighted={lastUsedName === preset.name && !selectedPreset}
-              onSelect={onSelect}
-            />
+    <div className="space-y-3">
+      <p className="text-sm font-medium text-muted-foreground">Choose an item</p>
+
+      {/* Category filter chips */}
+      <ScrollArea className="w-full">
+        <div className="flex gap-2 pb-1">
+          {availableCategories.map((cat) => (
+            <button
+              key={cat.key}
+              onClick={() => { setActiveCategory(cat.key); setMaincourseFilter('all'); }}
+              className={cn(
+                'shrink-0 rounded-full px-3.5 py-1.5 text-xs font-medium transition-all duration-150',
+                activeCategory === cat.key
+                  ? 'bg-primary text-primary-foreground'
+                  : 'bg-muted/50 text-muted-foreground hover:bg-muted'
+              )}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
+        <ScrollBar orientation="horizontal" />
+      </ScrollArea>
+
+      {/* Maincourse sub-filter */}
+      {activeCategory === 'maincourse' && (
+        <div className="flex gap-2">
+          {(['all', 'veg', 'non_veg'] as const).map((f) => (
+            <button
+              key={f}
+              onClick={() => setMaincourseFilter(f)}
+              className={cn(
+                'rounded-full px-3 py-1 text-xs font-medium transition-all duration-150',
+                maincourseFilter === f
+                  ? 'bg-accent text-accent-foreground border border-primary/30'
+                  : 'bg-muted/30 text-muted-foreground hover:bg-muted/50'
+              )}
+            >
+              {f === 'all' ? 'All' : f === 'veg' ? 'Veg' : 'Non-Veg'}
+            </button>
           ))}
         </div>
       )}
+
+      {/* Preset list */}
+      <div className="space-y-2">
+        {filtered.map((preset) => (
+          <PresetButton
+            key={preset.name}
+            preset={preset}
+            selected={selectedPreset?.name === preset.name}
+            highlighted={lastUsedName === preset.name && !selectedPreset}
+            onSelect={onSelect}
+          />
+        ))}
+        {filtered.length === 0 && (
+          <p className="text-xs text-muted-foreground py-4 text-center">
+            No items in this category for your diet.
+          </p>
+        )}
+      </div>
     </div>
   );
 }

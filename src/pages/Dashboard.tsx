@@ -193,13 +193,12 @@ export default function Dashboard() {
       </main>
 
       {/* Sticky bottom action bar */}
-      <div className="fixed bottom-14 left-0 right-0 z-20 border-t bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60 px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))]">
+      <div className="fixed bottom-14 left-0 right-0 z-20 border-t border-border/40 bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60 px-4 py-2.5 pb-[calc(0.625rem+env(safe-area-inset-bottom))]">
         <Button
-          size="lg"
           onClick={() => setSheetOpen(true)}
-          className="w-full h-12 rounded-2xl text-base font-medium shadow-sm transition-transform duration-150 active:scale-[0.98]"
+          className="w-full h-11 rounded-2xl text-sm font-medium shadow-xs transition-transform duration-150 active:scale-[0.98]"
         >
-          <Plus className="mr-2 h-5 w-5" />
+          <Plus className="mr-2 h-4.5 w-4.5" />
           Log Food
         </Button>
       </div>
