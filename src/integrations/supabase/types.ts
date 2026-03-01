@@ -47,6 +47,33 @@ export type Database = {
         }
         Relationships: []
       }
+      daily_state: {
+        Row: {
+          created_at: string | null
+          date: string
+          id: string
+          state: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          date?: string
+          id?: string
+          state: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          date?: string
+          id?: string
+          state?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       daily_status: {
         Row: {
           calorie_status: Database["public"]["Enums"]["calorie_status"] | null
