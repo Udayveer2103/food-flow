@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PRICE_BAND_LABELS } from '@/types/database';
 import { useWeeklyReflection } from '@/hooks/useWeeklyReflection';
+import { useWeeklyState } from '@/hooks/useWeeklyState';
 import { format, parseISO } from 'date-fns';
 
 const DAY_LABELS = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
