@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PRICE_BAND_LABELS } from '@/types/database';
 import { useWeeklyReflection } from '@/hooks/useWeeklyReflection';
+import { useWeeklyState } from '@/hooks/useWeeklyState';
 import { format, parseISO } from 'date-fns';
 
 const DAY_LABELS = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
@@ -8,6 +9,7 @@ const DAY_LABELS = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 export default function WeeklyReflection() {
   const { dots, balancedDays, avgProtein, mostCommonSource, predominantPriceBand, hasEnoughData, loading, loggedDays } =
     useWeeklyReflection();
+  const weeklyState = useWeeklyState();
 
   if (loading) return null;
 
@@ -68,7 +70,13 @@ export default function WeeklyReflection() {
             {predominantPriceBand && (
               <Row label="Typical spend" value={PRICE_BAND_LABELS[predominantPriceBand]} />
             )}
-          </CardContent>
+            {weeklyState.hasData && weeklyState.eatingTone && (
+              <Row label="Eating tone this week" value={weeklyState.eatingTone} />
+            )}
+            {weeklyState.hasData && weeklyState.stateStability && (
+              <Row label="State stability" value={weeklyState.stateStability} />
+            )}
+           </CardContent>
         </Card>
       )}
     </div>

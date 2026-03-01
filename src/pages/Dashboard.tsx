@@ -8,6 +8,7 @@ import { DIET_TYPE_LABELS, FOOD_TYPE_LABELS } from '@/types/database';
 import { FOOD_TYPE_ICONS } from '@/data/foodPresets';
 import { Card, CardContent } from '@/components/ui/card';
 import DailySnapshotCard from '@/components/food/DailySnapshotCard';
+import DailyStateCard from '@/components/food/DailyStateCard';
 import FoodLogList from '@/components/food/FoodLogList';
 import EndOfDayStatus from '@/components/food/EndOfDayStatus';
 import LogFoodSheet from '@/components/food/LogFoodSheet';
@@ -37,7 +38,6 @@ export default function Dashboard() {
   const [sheetOpen, setSheetOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<TabValue>('food');
 
-  // Wrap addLog to also save last template
   const handleAddLog = async (params: Parameters<typeof addLog>[0]) => {
     const result = await addLog(params);
     if (!result.error && params.food_type && params.food_name) {
@@ -64,7 +64,7 @@ export default function Dashboard() {
       </header>
 
       {/* Main */}
-      <main className="container py-6 space-y-8 pb-36">
+      <main className="container py-6 space-y-8 pb-28">
         {/* Greeting */}
         <div className="animate-fade-in">
           <h1 className="text-base font-medium text-foreground">Hi there 👋</h1>
@@ -102,49 +102,35 @@ export default function Dashboard() {
           </button>
         </div>
 
-        {/* Food Tab — reordered hierarchy */}
-         {activeTab === 'food' && (
-           <div className="space-y-8 animate-fade-in">
-            {/* 1. Daily Snapshot */}
+        {/* Food Tab */}
+        {activeTab === 'food' && (
+          <div className="space-y-8 animate-fade-in">
             <DailySnapshotCard snapshot={snapshot} />
-
-            {/* 2. Quick Add Row */}
+            <DailyStateCard />
             <QuickAddRow
               dietType={profile?.diet_type ?? null}
               saving={saving}
               onQuickAdd={handleAddLog}
             />
-
-            {/* 3. Today's Spend */}
             <DailySpendCard spend={todaySpend} />
-
-            {/* 4. End of Day Status */}
             <EndOfDayStatus status={snapshot.dayStatus} />
-
-            {/* 5. Today's Entries */}
             <FoodLogList logs={logs} onDelete={deleteLog} />
-
-            {/* 6. Weekly Summary */}
             <WeeklyReflection />
-
-            {/* 7. Food Rhythm */}
             <FoodRhythmCard />
-
-            {/* 8. Recent Patterns */}
             <RecentPatterns />
           </div>
         )}
 
         {/* Money Tab */}
-         {activeTab === 'money' && (
-           <div className="space-y-8 animate-fade-in">
+        {activeTab === 'money' && (
+          <div className="space-y-8 animate-fade-in">
             {moneyLoading ? (
               <div className="flex justify-center py-12">
                 <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
               </div>
             ) : days.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-16 text-center">
-              <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-muted/40">
+                <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-muted/40">
                   <IndianRupee className="h-6 w-6 text-muted-foreground" />
                 </div>
                 <p className="text-sm text-muted-foreground">No spending logged yet.</p>
@@ -154,7 +140,7 @@ export default function Dashboard() {
               </div>
             ) : (
               days.map((day) => (
-              <Card key={day.date} className="border-0 shadow-sm">
+                <Card key={day.date} className="border-0 shadow-sm">
                   <CardContent className="p-4">
                     <div className="flex items-center justify-between mb-4">
                       <p className="text-sm font-medium text-foreground">
@@ -192,16 +178,15 @@ export default function Dashboard() {
         )}
       </main>
 
-      {/* Sticky bottom action bar */}
-      <div className="fixed bottom-14 left-0 right-0 z-20 border-t border-border/40 bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60 px-4 py-2.5 pb-[calc(0.625rem+env(safe-area-inset-bottom))]">
-        <Button
-          onClick={() => setSheetOpen(true)}
-          className="w-full h-11 rounded-2xl text-sm font-medium shadow-xs transition-transform duration-150 active:scale-[0.98]"
-        >
-          <Plus className="mr-2 h-4.5 w-4.5" />
-          Log Food
-        </Button>
-      </div>
+      {/* Compact floating Log Food button */}
+      <Button
+        onClick={() => setSheetOpen(true)}
+        className="fixed bottom-20 right-4 z-20 h-11 px-5 rounded-2xl text-sm font-medium shadow-sm transition-transform duration-150 active:scale-[0.97]"
+        style={{ marginBottom: 'env(safe-area-inset-bottom)' }}
+      >
+        <Plus className="mr-2 h-4 w-4" />
+        Log Food
+      </Button>
 
       <LogFoodSheet
         open={sheetOpen}
