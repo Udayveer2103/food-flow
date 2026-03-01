@@ -1,28 +1,40 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { useFoodRhythm, DayCell } from '@/hooks/useFoodRhythm';
 import { FoodType } from '@/types/database';
+import { EatingState } from '@/hooks/useDailyState';
 import { cn } from '@/lib/utils';
 
-const SOURCE_TINTS: Partial<Record<FoodType, string>> = {
-  mess_meal: 'bg-chart-1/20',
-  home_food: 'bg-chart-2/20',
-  outside_food: 'bg-chart-3/20',
-  milk: 'bg-chart-4/20',
-  protein_shake: 'bg-chart-5/20',
-  fruit: 'bg-warning/20',
+// Muted, calm base tones per source
+const SOURCE_BASE: Partial<Record<FoodType, string>> = {
+  mess_meal: 'bg-[hsl(35_30%_78%)]',      // warm beige
+  home_food: 'bg-[hsl(90_12%_72%)]',       // olive-grey
+  outside_food: 'bg-[hsl(30_25%_72%)]',    // sand/brown
+  milk: 'bg-[hsl(45_20%_80%)]',
+  protein_shake: 'bg-[hsl(200_15%_75%)]',
+  fruit: 'bg-[hsl(50_25%_78%)]',
+};
+
+// State intensity modifiers (opacity-based lightness shift)
+const STATE_OPACITY: Record<EatingState, string> = {
+  light: 'opacity-60',
+  neutral: 'opacity-80',
+  heavy: 'opacity-100',
 };
 
 function DayBlock({ day }: { day: DayCell }) {
-  const tint = day.logged && day.dominantSource
-    ? SOURCE_TINTS[day.dominantSource] ?? 'bg-muted/30'
+  const base = day.logged && day.dominantSource
+    ? SOURCE_BASE[day.dominantSource] ?? 'bg-muted/30'
     : 'bg-muted/15';
+
+  const intensity = day.state ? STATE_OPACITY[day.state] : 'opacity-75';
 
   return (
     <div className="flex flex-col items-center gap-1.5">
       <div
         className={cn(
-          'h-8 w-full rounded-lg transition-colors',
-          tint,
+          'h-8 w-full rounded-lg transition-all duration-200',
+          base,
+          day.logged && intensity,
         )}
       />
       <span className="text-[10px] text-muted-foreground/70">{day.label}</span>
@@ -31,7 +43,7 @@ function DayBlock({ day }: { day: DayCell }) {
 }
 
 export default function FoodRhythmCard() {
-  const { title, description, days, hasData, loading } = useFoodRhythm();
+  const { title, description, days, hasData, loading, correlation } = useFoodRhythm();
 
   if (loading || !hasData) return null;
 
@@ -50,6 +62,9 @@ export default function FoodRhythmCard() {
             <DayBlock key={day.label} day={day} />
           ))}
         </div>
+        {correlation && (
+          <p className="text-xs text-muted-foreground/65 pt-1">{correlation}</p>
+        )}
       </CardContent>
     </Card>
   );
