@@ -22,21 +22,24 @@ const STATE_LIGHTNESS_DELTA: Record<EatingState, number> = {
   heavy: -13,   // −13% lightness
 };
 
-function DayBlock({ day }: { day: DayCell }) {
-  const base = day.logged && day.dominantSource
-    ? SOURCE_BASE[day.dominantSource] ?? 'bg-muted/30'
-    : 'bg-muted/15';
+function getDayColor(day: DayCell): string | undefined {
+  if (!day.logged || !day.dominantSource) return undefined;
+  const color = SOURCE_COLORS[day.dominantSource];
+  if (!color) return undefined;
+  const delta = day.state ? STATE_LIGHTNESS_DELTA[day.state] : 0;
+  const l = Math.min(90, Math.max(30, color.l + delta));
+  return `hsl(${color.h} ${color.s}% ${l}%)`;
+}
 
-  const intensity = day.state ? STATE_OPACITY[day.state] : 'opacity-75';
+function DayBlock({ day }: { day: DayCell }) {
+  const bg = getDayColor(day);
 
   return (
     <div className="flex flex-col items-center gap-1.5">
       <div
-        className={cn(
-          'h-8 w-full rounded-lg transition-all duration-200',
-          base,
-          day.logged && intensity,
-        )}
+        className="h-8 w-full rounded-lg transition-all duration-200"
+        style={bg ? { backgroundColor: bg } : undefined}
+        {...(!bg && { className: 'h-8 w-full rounded-lg transition-all duration-200 bg-muted/15' })}
       />
       <span className="text-[10px] text-muted-foreground/70">{day.label}</span>
     </div>
