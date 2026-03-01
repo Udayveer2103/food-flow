@@ -9,6 +9,7 @@ const DAY_LABELS = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 export default function WeeklyReflection() {
   const { dots, balancedDays, avgProtein, mostCommonSource, predominantPriceBand, hasEnoughData, loading, loggedDays } =
     useWeeklyReflection();
+  const weeklyState = useWeeklyState();
 
   if (loading) return null;
 
