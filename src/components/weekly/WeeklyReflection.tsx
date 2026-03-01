@@ -70,7 +70,13 @@ export default function WeeklyReflection() {
             {predominantPriceBand && (
               <Row label="Typical spend" value={PRICE_BAND_LABELS[predominantPriceBand]} />
             )}
-          </CardContent>
+            {weeklyState.hasData && weeklyState.eatingTone && (
+              <Row label="Eating tone this week" value={weeklyState.eatingTone} />
+            )}
+            {weeklyState.hasData && weeklyState.stateStability && (
+              <Row label="State stability" value={weeklyState.stateStability} />
+            )}
+           </CardContent>
         </Card>
       )}
     </div>
