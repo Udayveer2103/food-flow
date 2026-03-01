@@ -5,20 +5,21 @@ import { EatingState } from '@/hooks/useDailyState';
 import { cn } from '@/lib/utils';
 
 // Muted, calm base tones per source
-const SOURCE_BASE: Partial<Record<FoodType, string>> = {
-  mess_meal: 'bg-[hsl(35_30%_78%)]',      // warm beige
-  home_food: 'bg-[hsl(90_12%_72%)]',       // olive-grey
-  outside_food: 'bg-[hsl(30_25%_72%)]',    // sand/brown
-  milk: 'bg-[hsl(45_20%_80%)]',
-  protein_shake: 'bg-[hsl(200_15%_75%)]',
-  fruit: 'bg-[hsl(50_25%_78%)]',
+// Muted base tones with increased hue separation
+const SOURCE_COLORS: Partial<Record<FoodType, { h: number; s: number; l: number }>> = {
+  mess_meal:     { h: 25, s: 35, l: 68 },   // warm clay
+  home_food:     { h: 140, s: 14, l: 65 },   // cool sage-grey
+  outside_food:  { h: 15, s: 28, l: 58 },    // deep cocoa-brown
+  milk:          { h: 45, s: 22, l: 72 },
+  protein_shake: { h: 200, s: 18, l: 68 },
+  fruit:         { h: 55, s: 28, l: 70 },
 };
 
-// State intensity modifiers (opacity-based lightness shift)
-const STATE_OPACITY: Record<EatingState, string> = {
-  light: 'opacity-60',
-  neutral: 'opacity-80',
-  heavy: 'opacity-100',
+// State intensity — lightness delta only, no hue shift
+const STATE_LIGHTNESS_DELTA: Record<EatingState, number> = {
+  light: 13,    // +13% lightness
+  neutral: 0,   // base
+  heavy: -13,   // −13% lightness
 };
 
 function DayBlock({ day }: { day: DayCell }) {
