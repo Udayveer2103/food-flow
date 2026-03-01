@@ -37,9 +37,8 @@ function DayBlock({ day }: { day: DayCell }) {
   return (
     <div className="flex flex-col items-center gap-1.5">
       <div
-        className="h-8 w-full rounded-lg transition-all duration-200"
+        className={cn('h-8 w-full rounded-lg transition-all duration-200', !bg && 'bg-muted/15')}
         style={bg ? { backgroundColor: bg } : undefined}
-        {...(!bg && { className: 'h-8 w-full rounded-lg transition-all duration-200 bg-muted/15' })}
       />
       <span className="text-[10px] text-muted-foreground/70">{day.label}</span>
     </div>
